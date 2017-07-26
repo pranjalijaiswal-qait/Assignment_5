@@ -11,14 +11,6 @@ public class Automate_Basic {
 	public static void main(String args[])
 	{
 	 action.getURL(URL);
-	 action.clickBasic();
-	 action.greenBox();
-	 action.repainting();
-	 action.proceed();
-	 action.drag_and_drop();
-	 action.proceed();
-	 action.switch_Window();
-	 action.proceed();
-	 action.cookie();
+	 action.click_to_proceed();
 	}
 }

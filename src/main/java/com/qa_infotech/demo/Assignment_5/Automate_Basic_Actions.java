@@ -48,21 +48,22 @@ public class Automate_Basic_Actions {
 		driver.switchTo().frame(driver.findElement(id));
 	}
 	
+	public void click_to_proceed()
+	{
+		 click(basicLink);
+		 click(greenbox);
+	     repainting();
+		 proceed();
+		 drag_and_drop();
+		 proceed();
+		 switch_Window();
+		 proceed();
+		 cookie();
+	}
+	
 	public void click(By Locator)
 	{
 		driver.findElement(Locator).click();
-	}
-	public void clickBasic()
-	{
-		click(basicLink);
-	}
-	public void greenBox()
-	{
-		click(greenbox);
-	}
-	public void repaint()
-	{
-	    click(repaint);
 	}
 	public String getColour_Box(By Box)
 	{
@@ -82,7 +83,7 @@ public class Automate_Basic_Actions {
 		get_color();
 		while(!(Box1_Colour.equalsIgnoreCase(Box2_Colour)))
 		{
-			repaint();
+			click(repaint);
 			driver.switchTo().defaultContent();
 			get_color();
 		}
