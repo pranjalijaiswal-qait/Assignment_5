@@ -1,4 +1,4 @@
-package com.qa_infotech.demo.Assignment_5;
+package Basic_Course;
 
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
