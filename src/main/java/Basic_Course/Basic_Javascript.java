@@ -1,7 +1,5 @@
 package Basic_Course;
 
-
-import java.util.concurrent.TimeUnit;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Cookie;
 import org.openqa.selenium.JavascriptExecutor;
@@ -27,24 +25,20 @@ public class Basic_Javascript {
 	{
 		System.setProperty("webdriver.chrome.driver","C:/Users/pranjalijaiswal/Downloads/chromedriver_win32/chromedriver.exe");
 		driver =new ChromeDriver();
-		driver.manage().timeouts().implicitlyWait(2,TimeUnit.SECONDS) ;
 		driver.manage().window().maximize();
 		driver.get(URL);
 		js=(JavascriptExecutor)driver;
 	}
 
 	
-	public void click_to_proceed()
+	public void click_to_proceed() throws InterruptedException
 	{
 		 js.executeScript("document.getElementsByTagName('a')[0].click()");
-		 js.executeScript("document.querySelector('.greenbox').click()");
+		 js.executeScript("passthru();");
 	     repainting();
-		 proceed();
 		 drag_and_drop();
-		 js.executeScript("document.getElementsByTagName('a')[1].click()");
 		 switch_Window();
-//		 proceed();
-//		 cookie();
+		 cookie();
 	}
 	public String getColour_Box()
 	{
@@ -68,11 +62,11 @@ public class Basic_Javascript {
 			driver.switchTo().defaultContent();
 			get_color();
 		}
+		proceed();
 	}
 	public void proceed()
 	{
-		js.executeScript("document.getElementsByTagName('a')[1].click()");
-//		driver.switchTo().defaultContent();
+		js.executeScript("gonext();");
 	}
 	public void drag_and_drop()
 	{
@@ -81,31 +75,30 @@ public class Basic_Javascript {
 		    Actions action = new Actions(driver);
 		    Action dragDrop = action.clickAndHold(fromElement).moveToElement(toElement).release(toElement).build();
 		    dragDrop.perform(); 
+			proceed();
 
 	}
-	public void switch_Window()
+	public void switch_Window() throws InterruptedException
 	{
-		System.out.println("START>>>>>");
-		js.executeScript("document.getElementsByTagName('a')[0].click()"); 
-		System.out.println("clicked");
 		String parentHandle = driver.getWindowHandle();   
-		System.out.println(parentHandle);
+		js.executeScript("launchwindow();"); 
 	    for (String winHandle : driver.getWindowHandles()) { 
 	        driver.switchTo().window(winHandle);     
-	        System.out.println("switched");
 	    }
-	    js.executeScript("return document.getElementById('name').setAttribute('value','Pranjali Jaiswal')");
-	    js.executeScript("document.getElementById('submit').click()");                          
+	    js.executeScript("document.getElementById('name').setAttribute('value','Pranjali Jaiswal')");
+	    js.executeScript("document.getElementById('submit').click()");   
 	    driver.switchTo().window(parentHandle);
+		proceed();
 	}
-//	public void cookie()
-//	{
-//		driver.navigate().to("http://10.0.1.86/tatoc/basic/cookie#");
-//		click(generate_Token);
-//		String token_value=driver.findElement(token).getText().substring(7);
-//		Cookie name = new Cookie("Token",token_value);
-//		driver.manage().addCookie(name);
-//		click(proceed);
-//	}
+	public void cookie()
+	{
+		driver.navigate().to("http://10.0.1.86/tatoc/basic/cookie#");
+		js.executeScript("generateToken();");
+		String token_value=(String) js.executeScript("return document.getElementById('token').textContent");
+		token_value=token_value.substring(7);
+		Cookie name = new Cookie("Token",token_value);
+		driver.manage().addCookie(name);
+		proceed();
+	}
 	
 }
